@@ -30,11 +30,11 @@ end if
 
 if videoLink is not missing value then
 	tell application "QuickTime Player"
-		set numberOfVideosPlaying to the number of documents
 		open URL videoLink
 		-- Wait until QuickTime has opened the video
-		repeat with i from 1 to 60
-			if the number of documents is (numberOfVideosPlaying + 1) then exit repeat
+		delay 1
+		set startedWaitingDate to current date
+		repeat until (the number of documents is greater than 0 and the first document is playing) or ((current date) - startedWaitingDate) is greater than 200
 			delay 0.05
 		end repeat
 		set the current time of document 1 to videoTimestamp
